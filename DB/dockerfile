@@ -1,0 +1,6 @@
+FROM 200.0.1.100:5000/mysql8
+ENV MYSQL_ROOT_PASSWORD=abc
+COPY student.sql /docker-entrypoint-initdb.d/
+ENV MYSQL_DATABASE=root
+EXPOSE 3306
+
