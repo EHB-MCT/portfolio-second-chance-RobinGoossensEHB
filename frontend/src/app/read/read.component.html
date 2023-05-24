@@ -1,0 +1,30 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th id="number">ID</th>
+        <th id="name">Name</th>
+        <th id="email">Email</th>
+        <th id="number">Cell Number</th>
+        <th id="edits">Edits</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of readData">
+        <td>{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ data.mobile }}</td>
+        <td>
+          <a [routerLink]="['/create', data.id]" class="btn btn-sm btn-warning">
+            Edit</a
+          >
+          &nbsp;
+          <button class="btn btn-sm btn-danger" (click)="deleteData(data.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
