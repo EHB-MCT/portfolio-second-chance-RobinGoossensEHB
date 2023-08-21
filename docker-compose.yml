@@ -1,0 +1,51 @@
+version: '3'
+services:
+  db: 
+    image: mysql:8.0.25
+    volumes:
+      - ./DB/db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: 'localhost'
+      MYSQL_DATABASE: 'nodeDB'
+      MYSQL_USER: root1
+      MYSQL_PASSWORD: root123
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    networks:
+      - app-network
+
+  backend:
+    build: 
+      context: ./backend
+      args:
+        - BASE_URL=http://backend:3000 
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy  
+    networks:
+      - app-network
+
+  fronend: 
+    build: ./frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    environment:
+      - BACKEND_HOST=backend
+    networks:
+      - app-network
+  
+
+networks:
+  app-network:
+    driver: bridge
