@@ -1,9 +1,12 @@
 const mysql = require("mysql2");
 
+// load env variables
+require("dotenv").config();
+
 const connection = mysql.createConnection({
-  host: "mysql",
-  user: "root",
-  password: "root@123",
+  host: process.env.DB_HOST,
+  user: "root1",
+  password: "root123",
   database: "nodeDB",
   port: "3306",
 });

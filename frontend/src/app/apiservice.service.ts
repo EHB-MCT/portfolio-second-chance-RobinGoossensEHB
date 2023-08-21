@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
 export class ApiserviceService {
   constructor(private _http: HttpClient) {}
 
-  apiUrl = 'http://localhost:3000/student';
+  apiUrl =  environment.BASE_URL + '/student';
 
   getAllData(): Observable<any> {
     return this._http.get(`${this.apiUrl}`);
